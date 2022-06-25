@@ -39,22 +39,21 @@ jobs:
         with:
           name: "test-report"
           path: coverage
+
       - name: "build website"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         run: npm run build
 
       - name: "upload build file"
         uses: actions/upload-artifact@v3
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         with:
-          name: "test-report"
-          path: coverage
-
-      - name: "show path"
-        run: |
-          pwd
-          ls -a
+          name: "build"
+          path: build
 
       - name: Deploy to righteous-grade111.surge.sh
         uses: dswistowski/surge-sh-action@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         with:
           domain: "righteous-grade111.surge.sh"
           project: "build"
