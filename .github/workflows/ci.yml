@@ -53,7 +53,7 @@ jobs:
       - name: Deploy to foo-bar.surge.sh
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: "marvelous-skin.surge.sh"
+          domain: "righteous-grade111.surge.sh"
           project: "."
           login: ${{ secrets.surge_login }}
           token: ${{ secrets.surge_token }}
