@@ -14,8 +14,24 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: "install dependency"
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
+        name: List the state of node modules
+        continue-on-error: true
         run: npm i
+
       - name: "run test"
         run: CI=true npm run test -- --coverage
       - name: "show path"
