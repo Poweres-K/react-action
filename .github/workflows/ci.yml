@@ -24,7 +24,7 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Generate Prime Numbers
+      - name: "install node module if not Cache"
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm i
 
