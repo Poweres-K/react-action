@@ -33,10 +33,7 @@ jobs:
         env:
           CI: true
         run: npm run test -- --coverage
-      - name: "show path"
-        run: |
-          pwd
-          ls -a
+
       - name: "upload report file"
         uses: actions/upload-artifact@v3
         with:
@@ -44,16 +41,22 @@ jobs:
           path: coverage
       - name: "build website"
         run: npm run build
+
       - name: "upload build file"
         uses: actions/upload-artifact@v3
         with:
           name: "test-report"
           path: coverage
 
-      - name: Deploy to foo-bar.surge.sh
+      - name: "show path"
+        run: |
+          pwd
+          ls -a
+
+      - name: Deploy to righteous-grade111.surge.sh
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: "righteous-grade111.surge.sh"
-          project: "."
+          project: "build"
           login: ${{ secrets.surge_login }}
           token: ${{ secrets.surge_token }}
