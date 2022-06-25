@@ -24,8 +24,8 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
-        name: "install if cache change"
+      - name: Generate Prime Numbers
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm i
 
       - name: "run test"
@@ -34,7 +34,7 @@ jobs:
       - name: "show path"
         run: |
           pwd
-          ls
+          ls -a
       - uses: actions/upload-artifact@v3
         with:
           name: "test-report"
