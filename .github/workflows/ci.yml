@@ -17,7 +17,7 @@ jobs:
       - name: "install dependency"
         run: npm i
       - name: "run test"
-        run: npm run test
+        run: CI=true npm run test -- --coverage
       - name: "show path"
         run: |
           pwd
