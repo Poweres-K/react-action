@@ -37,7 +37,23 @@ jobs:
         run: |
           pwd
           ls -a
-      - uses: actions/upload-artifact@v3
+      - name: "upload report file"
+        uses: actions/upload-artifact@v3
         with:
           name: "test-report"
           path: coverage
+      - name: "build website"
+        run: npm run build
+      - name: "upload build file"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "test-report"
+          path: coverage
+
+      - name: Deploy to foo-bar.surge.sh
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: "marvelous-skin.surge.sh"
+          project: "."
+          login: ${{ secrets.surge_login }}
+          token: ${{ secrets.surge_token }}
