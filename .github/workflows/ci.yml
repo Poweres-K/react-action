@@ -5,7 +5,7 @@ on:
     branches:
       - "dev"
 jobs:
-  build:
+  setup-repo:
     runs-on: ubuntu-latest
     steps:
       - name: "checkout repo"
@@ -28,6 +28,26 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
+  run-test:
+    runs-on: ubuntu-latest
+    needs: [setup-repo]
+    steps:
+      - name: "checkout repo"
+        uses: actions/checkout@v3
+      - name: "set upnode"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
       - name: "run test"
         continue-on-error: true
         env:
@@ -40,20 +60,39 @@ jobs:
           name: "test-report"
           path: coverage
 
+  deploy-ewbsite:
+    # if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    needs: [setup-repo]
+    steps:
+      - name: "checkout repo"
+        uses: actions/checkout@v3
+      - name: "set upnode"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
       - name: "build website"
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         run: npm run build
 
       - name: "upload build file"
         uses: actions/upload-artifact@v3
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         with:
           name: "build"
           path: build
 
       - name: Deploy to righteous-grade111.surge.sh
         uses: dswistowski/surge-sh-action@v1
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+
         with:
           domain: "righteous-grade111.surge.sh"
           project: "build"
