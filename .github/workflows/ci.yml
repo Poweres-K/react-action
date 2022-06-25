@@ -1,0 +1,28 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches:
+      - "dev"
+jobs:
+  PR:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout repo"
+        uses: actions/checkout@v3
+      - name: "set upnode"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: "install dependency"
+        run: npm i
+      - name: "run test"
+        run: npm run test
+      - name: "show path"
+        run: |
+          pwd
+          ls
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "test-report"
+          path: coverage
