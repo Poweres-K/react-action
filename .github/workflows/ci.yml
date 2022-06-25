@@ -61,7 +61,7 @@ jobs:
           path: coverage
 
   deploy-ewbsite:
-    # if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     needs: [setup-repo]
     steps:
