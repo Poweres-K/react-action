@@ -24,13 +24,15 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: "install node module if not Cache"
+      - name: install node module if not Cache
         if: steps.cache-npm.outputs.cache-hit != 'true'
-        run: npm i
+        run: npm ci
 
       - name: "run test"
         continue-on-error: true
-        run: CI=true npm run test -- --coverage
+        env:
+          CI: true
+        run: npm run test -- --coverage
       - name: "show path"
         run: |
           pwd
