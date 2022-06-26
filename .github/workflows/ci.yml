@@ -93,18 +93,18 @@ jobs:
       - name: "select url for deploy"
         id: select-url
         run: |
-          if [["${{github.ref}}" == "refs/heads/dev"]]; then
+          if [["${{github.ref}}" = "refs/heads/dev"]]; then
             echo "::set-output name=url::righteous-grade111.surge.sh"
           else
             echo "::set-output name=url::master-url"
           fi
       - name: show which url
-        run: echo ${{steps.select-url.outputs.url }}
+        run: echo ${{steps.select-url.outputs.url}}
 
       - name: Deploy to to surge
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: ${{ steps.select-url.outputs.url }}
+          domain: "${{ steps.select-url.outputs.url }}"
           project: "build"
           login: ${{ secrets.surge_login }}
           token: ${{ secrets.surge_token }}
