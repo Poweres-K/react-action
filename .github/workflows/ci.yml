@@ -23,8 +23,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-
-      - name: install node module if not Cache
+      - name: install node module
         run: npm ci
 
   run-test:
