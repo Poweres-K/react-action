@@ -93,7 +93,7 @@ jobs:
       - name: "select url for deploy"
         id: select-url
         run: |
-          if [["${{github.ref}}"" == 'refs/heads/dev']]; then
+          if [["${{github.ref}}" == "refs/heads/dev"]]; then
             echo "::set-output name=url::righteous-grade111.surge.sh"
           else
             echo "::set-output name=url::master-url"
