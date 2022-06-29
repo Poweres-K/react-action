@@ -1,0 +1,12 @@
+name: Notify on release
+on:
+  # release:
+  #   types: [published]
+  pull_request:
+jobs:
+  slack-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: send slack-message
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' ${{secrets.SLACK_TOKEN}}
