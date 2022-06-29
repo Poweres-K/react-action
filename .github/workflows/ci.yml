@@ -60,6 +60,7 @@ jobs:
           name: "test-report"
           path: coverage
       - name: upload to codecov
+        if: github.event_name == 'push' &&  github.ref == 'refs/heads/master'
         run: npx codecov
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
