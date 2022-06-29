@@ -48,9 +48,10 @@ jobs:
             ${{ runner.os }}-build-again
             ${{ runner.os }}-
       - name: upload to codecov
-        run: npx codecov
-        env:
-          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ./clover.xml
 
       - name: "run test"
         continue-on-error: true
