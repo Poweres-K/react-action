@@ -60,6 +60,7 @@ jobs:
           name: "test-report"
           path: coverage
       - name: upload to codecov
+        if: github.event_name == 'push' &&  github.ref == 'refs/heads/master'
         run: npx codecov
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
@@ -116,4 +117,4 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: npx semantic-release
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.CUSTOM_TOKEN}}
