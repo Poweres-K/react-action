@@ -1,8 +1,7 @@
 name: Notify on release
 on:
-  # release:
-  #   types: [published]
-  pull_request:
+  release:
+    types: [published]
 jobs:
   slack-message:
     runs-on: ubuntu-latest
