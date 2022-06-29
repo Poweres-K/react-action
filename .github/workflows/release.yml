@@ -8,4 +8,4 @@ jobs:
     steps:
       - name: send slack-message
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' ${{secrets.SLACK_TOKEN}}
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"new release ${{ github.event.release.tag_name }} is out <${{github.event.release.html_url}}|check it out now.>"}' ${{secrets.SLACK_TOKEN}}
