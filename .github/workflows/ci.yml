@@ -27,6 +27,14 @@ jobs:
       - name: install node module
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
+      - name: Hello world action step
+        id: hello
+        uses: ./.github/actions/hello
+        with:
+          who-to-greet: "Poweres"
+        # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
 
   run-test:
     runs-on: ubuntu-latest
