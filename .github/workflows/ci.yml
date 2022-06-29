@@ -60,10 +60,7 @@ jobs:
           name: "test-report"
           path: coverage
       - name: upload to codecov
-        run: curl -Os https://uploader.codecov.io/latest/linux/codecov
-
-          chmod +x codecov
-          ./codecov
+        run: npx codecov
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
 
