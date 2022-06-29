@@ -48,13 +48,12 @@ jobs:
             ${{ runner.os }}-build-again
             ${{ runner.os }}-
       - name: upload to codecov
-        run: |
-          curl -Os https://uploader.codecov.io/latest/linux/codecov
+        run: curl -Os https://uploader.codecov.io/latest/linux/codecov
 
           chmod +x codecov
           ./codecov
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
 
       - name: "run test"
         continue-on-error: true
