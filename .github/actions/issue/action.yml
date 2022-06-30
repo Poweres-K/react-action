@@ -1,0 +1,21 @@
+name: "Open Issue"
+description: "Automate openning isse"
+inputs:
+  token:
+    description: "Github token"
+    required: true
+  title:
+    description: "Github title"
+    required: true
+  body:
+    description: "Issue body"
+    required: false
+  assignee:
+    description: "Issue assignee"
+    required: false
+outputs:
+  issue: # id of output
+    description: "This issue object"
+runs:
+  using: "node16"
+  main: "index.js"

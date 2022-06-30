@@ -7,6 +7,16 @@ jobs:
     steps:
       - name: "checkout repo"
         uses: actions/checkout@v3
+
+      - name: create isuue
+        id: issue
+        uses: ./.github/actions/issue
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: test title
+          body: test body
+      - name: log issue output
+        run: echo ${{steps.issue.outputs.issue}}
       - name: Hello world action step
         id: hello
         uses: ./.github/actions/hello
